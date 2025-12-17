@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Вхід</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <div class="auth-card">
+    <h1>PetCare - турбота про домашніх улюбленців</h1>
+    <h2>Вхід</h2>
+
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Логін" class="auth-input" required>
+      <input type="password" id="password" placeholder="Пароль" class="auth-input" required>
+      <button type="submit"class="auth-button">Увійти</button>
+    </form>
+
+    <p>Немає акаунта? <a href="register.html">Зареєструватися</a></p>
+  </div>
+
+  <script>
+    document.getElementById("login-form").onsubmit = async e => {
+      e.preventDefault();
+      const body = {
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value
+      };
+
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        window.location.href = "index.html";
+      } else {
+        alert("Невірні дані");
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Petcare (Node + MySQL)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>Мої тварини</h1>
+  <section class="card">
+  <h2>Новини / Оголошення</h2>
+  <form id="add-news-form">
+    <input type="text" id="news_title" placeholder="Заголовок" required>
+    <textarea id="news_content" placeholder="Текст оголошення" required></textarea>
+    <input type="date" id="news_start_date">
+    <input type="date" id="news_end_date">
+    <input type="text" id="news_source" placeholder="Джерело">
+    <button type="submit">Додати оголошення</button>
+  </form>
+  <table id="news-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Заголовок</th>
+        <th>Текст</th>
+        <th>Дати</th>
+        <th>Джерело</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+  <!-- Додати тварину -->
+  <section class="card">
+    <h2>Додати тварину</h2>
+    <form id="add-pet-form">
+      <input type="text" id="type" placeholder="Тип">
+      <input type="text" id="breed" placeholder="Порода">
+      <input type="text" id="name" placeholder="Ім'я" required>
+      <input type="date" id="birth_date" placeholder="дд.мм.рррр">
+      <input type="text" id="document_number" placeholder="Номер документа">
+      <input type="text" id="owner_name" placeholder="Власник">
+      <input type="text" id="owner_phone" placeholder="Телефон">
+      <input type="text" id="location" placeholder="Місце проживання">
+      <button type="submit">Додати</button>
+    </form>
+  </section>
+
+  <!-- Список тварин (з новим порядком колонок) -->
+  <section class="card">
+    <h2>Список тварин</h2>
+    <table id="pets-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Тип</th>
+          <th>Порода</th>
+          <th>Ім'я</th>
+          <th>Дата народження</th>
+          <th>Номер документа</th>
+          <th>Власник</th>
+          <th>Телефон</th>
+          <th>Місце проживання</th>
+          <th>Дії</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- Додати подію -->
+  <section class="card">
+    <h2>Додати подію</h2>
+    <form id="add-event-form">
+      <input type="number" id="event_pet_id" placeholder="ID тварини" required>
+      <input type="text" id="clinic" placeholder="Ветеринарна клініка">
+      <input type="text" id="event_location" placeholder="Місце проведення">
+      <select id="event_type">
+        <option>Щеплення</option>
+        <option>Візит</option>
+        <option>Дієта</option>
+      </select>
+      <input type="date" id="event_date">
+      <input type="text" id="description" placeholder="Опис">
+      <button type="submit">Додати подію</button>
+    </form>
+  </section>
+
+  <!-- Події тварини -->
+  <section class="card">
+    <h2>Події (обери тварину → натисни "Показати події")</h2>
+    <table id="events-table">
+      <thead>
+        <tr>
+          <th>ID тварини</th>
+          <th>Тип</th>
+          <th>Дата</th>
+          <th>Опис</th>
+          <th>Ветеринарна клініка</th>
+          <th>Місце проведення</th>
+          <th>Дії</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+  <!-- Кінологічні центри -->
+    <section class="card">
+      <h2>Кінологічні центри</h2>
+      <form id="add-center-form">
+        <input type="text" id="center_name" placeholder="Назва центру" required>
+        <input type="text" id="center_address" placeholder="Адреса">
+        <input type="text" id="center_phone" placeholder="Телефон">
+        <button type="submit">Додати центр</button>
+      </form>
+      <table id="centers-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Адреса</th>
+            <th>Телефон</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Тренери -->
+    <section class="card">
+      <h2>Тренери</h2>
+      <form id="add-trainer-form">
+        <input type="number" id="trainer_center_id" placeholder="ID центру" required>
+        <input type="text" id="trainer_name" placeholder="Ім'я тренера" required>
+        <input type="text" id="trainer_specialty" placeholder="Спеціалізація">
+        <input type="text" id="trainer_phone" placeholder="Телефон">
+        <button type="submit">Додати тренера</button>
+      </form>
+      <table id="trainers-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Ім'я</th>
+            <th>Спеціалізація</th>
+            <th>Телефон</th>
+            <th>Центр</th>
+            <th>Адреса центру</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>  
+    <!-- Дозвілля -->
+<section class="card">
+  <h2>Дозвілля для тварин</h2>
+  <form id="add-leisure-form">
+    <input type="text" id="leisure_name" placeholder="Назва" required>
+    <input type="text" id="leisure_type" placeholder="Тип (парк, кафе, магазин)">
+    <input type="text" id="leisure_address" placeholder="Адреса">
+    <input type="text" id="leisure_description" placeholder="Опис">
+    <button type="submit">Додати місце</button>
+  </form>
+  <table id="leisure-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Тип</th>
+        <th>Адреса</th>
+        <th>Опис</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+<!-- Заводчики -->
+<section class="card">
+  <h2>Зарeєстровані заводчики</h2>
+  <form id="add-breeder-form">
+    <input type="text" id="breeder_name" placeholder="Ім'я / Назва" required>
+    <input type="text" id="breeder_animal_type" placeholder="Тварина (Собака / Кіт)">
+    <input type="text" id="breeder_phone" placeholder="Телефон">
+    <input type="email" id="breeder_email" placeholder="Email">
+    <input type="text" id="breeder_address" placeholder="Адреса">
+    <input type="text" id="breeder_description" placeholder="Опис">
+    <button type="submit">Додати заводчика</button>
+  </form>
+  <table id="breeders-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ім'я / Назва</th>
+        <th>Тварина</th>
+        <th>Телефон</th>
+        <th>Email</th>
+        <th>Адреса</th>
+        <th>Опис</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+<!-- Календар виставок -->
+<section class="card">
+  <h2>Календар виставок в Україні</h2>
+  <form id="add-exhibition-form">
+    <input type="text" id="exhibition_name" placeholder="Назва виставки" required>
+    <input type="text" id="exhibition_animal_type" placeholder="Категорія (Собака / Кіт)">
+    <input type="date" id="exhibition_start_date" required>
+    <input type="date" id="exhibition_end_date">
+    <input type="text" id="exhibition_location" placeholder="Місце проведення">
+    <input type="text" id="exhibition_description" placeholder="Опис">
+    <button type="submit">Додати виставку</button>
+  </form>
+  <table id="exhibitions-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Категорія</th>
+        <th>Дата початку</th>
+        <th>Дата закінчення</th>
+        <th>Місце</th>
+        <th>Опис</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+<!-- Нормативно-правова база -->
+<section class="card">
+  <h2>Нормативно-правова база щодо реєстрації тварин</h2>
+  <form id="add-regulation-form">
+    <input type="text" id="reg_title" placeholder="Назва закону / правила" required>
+    <input type="text" id="reg_type" placeholder="Тип документу (Закон, Постанова, Наказ)">
+    <input type="url" id="reg_url" placeholder="Посилання">
+    <input type="text" id="reg_description" placeholder="Опис">
+    <button type="submit">Додати документ</button>
+  </form>
+  <table id="regulations-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Тип</th>
+        <th>Посилання</th>
+        <th>Опис</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+<section class="card">
+  <h2>Організації, що допомагають тваринам</h2>
+  <form id="add-org-form">
+    <input type="text" id="org_name" placeholder="Назва організації" required>
+    <input type="text" id="org_website" placeholder="Сайт / Контакт">
+    <input type="text" id="org_phone" placeholder="Телефон">
+    <input type="email" id="org_email" placeholder="Email">
+    <input type="text" id="org_description" placeholder="Опис / напрямок">
+    <button type="submit">Додати організацію</button>
+  </form>
+  <table id="org-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Контакти</th>
+        <th>Опис</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+</div>
+
+<script>
+const API = '/api';
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+}
+
+// ---------------- Pets ----------------
+async function loadPets() {
+  const res = await fetch(API + '/pets');
+  const pets = await res.json();
+  const tbody = document.querySelector('#pets-table tbody');
+  tbody.innerHTML = '';
+  pets.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${p.id}</td>
+      <td>${escapeHtml(p.type || '')}</td>
+      <td>${escapeHtml(p.breed || '')}</td>
+      <td>${escapeHtml(p.name || '')}</td>
+      <td>${formatDate(p.birth_date)}</td>
+      <td>${escapeHtml(p.document_number || '')}</td>
+      <td>${escapeHtml(p.owner_name || '')}</td>
+      <td>${escapeHtml(p.owner_phone || '')}</td>
+      <td>${escapeHtml(p.location || '')}</td>
+      <td>
+        <button onclick="deletePet(${p.id})" class="delete">Видалити</button>
+        <button onclick="showEvents(${p.id})" class="show-events">Показати події</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-pet-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    type: document.getElementById('type').value,
+    breed: document.getElementById('breed').value,
+    name: document.getElementById('name').value,
+    birth_date: document.getElementById('birth_date').value || null,
+    document_number: document.getElementById('document_number').value || null,
+    owner_name: document.getElementById('owner_name').value || null,
+    owner_phone: document.getElementById('owner_phone').value || null,
+    location: document.getElementById('location').value || null
+  };
+  await fetch(API + '/pets', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  loadPets();
+};
+
+async function deletePet(id) {
+  if (!confirm('Видалити тварину?')) return;
+  await fetch(`${API}/pets/${id}`, { method:'DELETE' });
+  document.querySelector('#events-table tbody').innerHTML = '';
+  loadPets();
+}
+
+// ---------------- Events ----------------
+async function showEvents(pet_id) {
+  const res = await fetch(`${API}/events/${pet_id}`);
+  const events = await res.json();
+  const tbody = document.querySelector('#events-table tbody');
+  tbody.innerHTML = '';
+  events.forEach(ev => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${ev.pet_id}</td>
+      <td>${escapeHtml(ev.event_type)}</td>
+      <td>${formatDate(ev.event_date)}</td>
+      <td>${escapeHtml(ev.description || '')}</td>
+      <td>${escapeHtml(ev.clinic || '')}</td>
+      <td>${escapeHtml(ev.location || '')}</td>
+      <td><button onclick="deleteEvent(${ev.id}, ${pet_id})" class="delete">Видалити</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-event-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    pet_id: parseInt(document.getElementById('event_pet_id').value),
+    event_type: document.getElementById('event_type').value,
+    event_date: document.getElementById('event_date').value || null,
+    description: document.getElementById('description').value || null,
+    clinic: document.getElementById('clinic').value || null,
+    location: document.getElementById('event_location').value || null
+  };
+  await fetch(`${API}/events`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  showEvents(body.pet_id);
+};
+
+async function deleteEvent(id, pet_id) {
+  if (!confirm('Видалити подію?')) return;
+  await fetch(`${API}/events/${id}`, { method:'DELETE' });
+  showEvents(pet_id);
+}
+ // ---------------- Training Centers ----------------
+    async function loadCenters(){
+      const res = await fetch(`${API}/centers`);
+      const centers = await res.json();
+      const tbody = document.querySelector('#centers-table tbody');
+      tbody.innerHTML='';
+      centers.forEach(c=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML=`
+          <td>${c.id}</td>
+          <td>${escapeHtml(c.name)}</td>
+          <td>${escapeHtml(c.address||'')}</td>
+          <td>${escapeHtml(c.phone||'')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('add-center-form').onsubmit = async e=>{
+      e.preventDefault();
+      const body = {
+        name: document.getElementById('center_name').value,
+        address: document.getElementById('center_address').value || null,
+        phone: document.getElementById('center_phone').value || null
+      };
+      await fetch(`${API}/centers`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      e.target.reset();
+      loadCenters();
+    };
+
+    // ---------------- Trainers ----------------
+    async function loadTrainers(){
+      const res = await fetch(`${API}/trainers`);
+      const trainers = await res.json();
+      const tbody = document.querySelector('#trainers-table tbody');
+      tbody.innerHTML='';
+      trainers.forEach(t=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML=`
+          <td>${t.id}</td>
+          <td>${escapeHtml(t.name)}</td>
+          <td>${escapeHtml(t.specialty||'')}</td>
+          <td>${escapeHtml(t.phone||'')}</td>
+          <td>${escapeHtml(t.center_name||'')}</td>
+          <td>${escapeHtml(t.center_address||'')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('add-trainer-form').onsubmit=async e=>{
+      e.preventDefault();
+      const body={
+        center_id: parseInt(document.getElementById('trainer_center_id').value),
+        name: document.getElementById('trainer_name').value,
+        specialty: document.getElementById('trainer_specialty').value||null,
+        phone: document.getElementById('trainer_phone').value||null
+      };
+      await fetch(`${API}/trainers`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      e.target.reset();
+      loadTrainers();
+    };
+    // ---------------- Leisure ----------------
+async function loadLeisure() {
+  const res = await fetch(`${API}/leisure`);
+  const places = await res.json();
+  const tbody = document.querySelector('#leisure-table tbody');
+  tbody.innerHTML = '';
+  places.forEach(p=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML=`
+      <td>${p.id}</td>
+      <td>${escapeHtml(p.name)}</td>
+      <td>${escapeHtml(p.type||'')}</td>
+      <td>${escapeHtml(p.address||'')}</td>
+      <td>${escapeHtml(p.description||'')}</td>
+      <td><button onclick="deleteLeisure(${p.id})"class="delete">Видалити</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-leisure-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    name: document.getElementById('leisure_name').value,
+    type: document.getElementById('leisure_type').value || null,
+    address: document.getElementById('leisure_address').value || null,
+    description: document.getElementById('leisure_description').value || null
+  };
+  await fetch(`${API}/leisure`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  loadLeisure();
+};
+
+async function deleteLeisure(id) {
+  if(!confirm('Видалити це місце?')) return;
+  await fetch(`${API}/leisure/${id}`, { method:'DELETE' });
+  loadLeisure();
+}
+// ---------------- Breeders ----------------
+async function loadBreeders() {
+  const res = await fetch(`${API}/breeders`);
+  const breeders = await res.json();
+  const tbody = document.querySelector('#breeders-table tbody');
+  tbody.innerHTML = '';
+  breeders.forEach(b => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${b.id}</td>
+      <td>${escapeHtml(b.name)}</td>
+      <td>${escapeHtml(b.animal_type || '')}</td>
+      <td>${escapeHtml(b.phone || '')}</td>
+      <td>${escapeHtml(b.email || '')}</td>
+      <td>${escapeHtml(b.address || '')}</td>
+      <td>${escapeHtml(b.description || '')}</td>
+      <td><button onclick="deleteBreeder(${b.id})"class="delete">Видалити</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-breeder-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    name: document.getElementById('breeder_name').value,
+    animal_type: document.getElementById('breeder_animal_type').value || null,
+    phone: document.getElementById('breeder_phone').value || null,
+    email: document.getElementById('breeder_email').value || null,
+    address: document.getElementById('breeder_address').value || null,
+    description: document.getElementById('breeder_description').value || null
+  };
+  await fetch(`${API}/breeders`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  loadBreeders();
+};
+
+async function deleteBreeder(id) {
+  if(!confirm('Видалити цього заводчика?')) return;
+  await fetch(`${API}/breeders/${id}`, { method:'DELETE' });
+  loadBreeders();
+}
+// ---------------- Exhibitions ----------------
+async function loadExhibitions() {
+  const res = await fetch(`${API}/exhibitions`);
+  const exhibitions = await res.json();
+  const tbody = document.querySelector('#exhibitions-table tbody');
+  tbody.innerHTML = '';
+  exhibitions.forEach(ex => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${ex.id}</td>
+      <td>${escapeHtml(ex.name)}</td>
+      <td>${escapeHtml(ex.animal_type || '')}</td>
+      <td>${formatDate(ex.start_date)}</td>
+      <td>${formatDate(ex.end_date)}</td>
+      <td>${escapeHtml(ex.location || '')}</td>
+      <td>${escapeHtml(ex.description || '')}</td>
+      <td><button onclick="deleteExhibition(${ex.id})"class="delete">Видалити</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-exhibition-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    name: document.getElementById('exhibition_name').value,
+    animal_type: document.getElementById('exhibition_animal_type').value || null,
+    start_date: document.getElementById('exhibition_start_date').value,
+    end_date: document.getElementById('exhibition_end_date').value || null,
+    location: document.getElementById('exhibition_location').value || null,
+    description: document.getElementById('exhibition_description').value || null
+  };
+  await fetch(`${API}/exhibitions`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  loadExhibitions();
+};
+
+async function deleteExhibition(id) {
+  if(!confirm('Видалити цю виставку?')) return;
+  await fetch(`${API}/exhibitions/${id}`, { method:'DELETE' });
+  loadExhibitions();
+}
+// ---------------- Regulations ----------------
+async function loadRegulations() {
+  const res = await fetch(`${API}/regulations`);
+  const regs = await res.json();
+  const tbody = document.querySelector('#regulations-table tbody');
+  tbody.innerHTML = '';
+  regs.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.id}</td>
+      <td>${escapeHtml(r.title)}</td>
+      <td>${escapeHtml(r.document_type || '')}</td>
+      <td>${r.url ? `<a href="${escapeHtml(r.url)}" target="_blank">Документ</a>` : ''}</td>
+      <td>${escapeHtml(r.description || '')}</td>
+      <td><button onclick="deleteRegulation(${r.id})"class="delete">Видалити</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-regulation-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    title: document.getElementById('reg_title').value,
+    document_type: document.getElementById('reg_type').value || null,
+    url: document.getElementById('reg_url').value || null,
+    description: document.getElementById('reg_description').value || null
+  };
+  await fetch(`${API}/regulations`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  loadRegulations();
+};
+
+async function deleteRegulation(id) {
+  if(!confirm('Видалити цей документ?')) return;
+  await fetch(`${API}/regulations/${id}`, { method:'DELETE' });
+  loadRegulations();
+}
+async function loadOrgs() {
+  const res = await fetch(`${API}/organizations`);
+  const orgs = await res.json();
+  const tbody = document.querySelector('#org-table tbody');
+  tbody.innerHTML = '';
+  orgs.forEach(o => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${o.id}</td>
+      <td>${escapeHtml(o.name)}</td>
+      <td>
+        ${o.website ? `<a href="${escapeHtml(o.website)}" target="_blank">Сайт</a><br>` : ''}
+        ${escapeHtml(o.phone || '')}<br>
+        ${escapeHtml(o.email || '')}
+      </td>
+      <td>${escapeHtml(o.description || '')}</td>
+      <td><button onclick="deleteOrg(${o.id})"class="delete">Видалити</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-org-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    name: document.getElementById('org_name').value,
+    website: document.getElementById('org_website').value || null,
+    phone: document.getElementById('org_phone').value || null,
+    email: document.getElementById('org_email').value || null,
+    description: document.getElementById('org_description').value || null
+  };
+  await fetch(`${API}/organizations`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  loadOrgs();
+};
+
+async function deleteOrg(id) {
+  if (!confirm('Видалити цю організацію?')) return;
+  await fetch(`${API}/organizations/${id}`, { method:'DELETE' });
+  loadOrgs();
+}
+async function loadNews() {
+  const res = await fetch(`${API}/news`);
+  const news = await res.json();
+  const tbody = document.querySelector('#news-table tbody');
+  tbody.innerHTML = '';
+  news.forEach(n => {
+    const tr = document.createElement('tr');
+    const dates = n.start_date ? formatDate(n.start_date) : '';
+    tr.innerHTML = `
+      <td>${n.id}</td>
+      <td>${escapeHtml(n.title)}</td>
+      <td>${escapeHtml(n.content)}</td>
+      <td>${dates}${n.end_date ? ' – ' + formatDate(n.end_date) : ''}</td>
+      <td>${escapeHtml(n.source || '')}</td>
+      `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('add-news-form').onsubmit = async e => {
+  e.preventDefault();
+  const body = {
+    title: document.getElementById('news_title').value,
+    content: document.getElementById('news_content').value,
+    start_date: document.getElementById('news_start_date').value || null,
+    end_date: document.getElementById('news_end_date').value || null,
+    source: document.getElementById('news_source').value || null
+  };
+  await fetch(`${API}/news`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  e.target.reset();
+  loadNews();
+};
+
+
+// Init
+loadPets();
+loadCenters();
+loadTrainers();
+loadLeisure();
+loadBreeders();
+loadExhibitions();
+loadRegulations();
+loadOrgs();
+loadNews();
+</script>
+</body>
+</html>

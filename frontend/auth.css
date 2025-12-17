@@ -1,0 +1,87 @@
+/* AUTH PAGES (login/register) */
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #2d9cdb, #214a77);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+    background: #ffffff;
+    width: 380px;
+    padding: 30px 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.auth-card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #214a77;
+    font-weight: 700;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 8px;
+    border: 1px solid #d0d7e2;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #2d9cdb;
+    box-shadow: 0 0 4px rgba(45, 156, 219, 0.4);
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2d9cdb;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.auth-button:hover {
+    background: #1c7fb5;
+}
+
+.auth-switch {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #555;
+}
+
+.auth-switch a {
+    color: #2d9cdb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+.consent {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.auth-button:disabled {
+  background: #bfcbd6;
+  cursor: not-allowed;
+}

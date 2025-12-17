@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Реєстрація</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <div class="auth-card">
+    <h1>PetCare - турбота про домашніх улюбленців</h1>
+    <h2>Реєстрація</h2>
+    <form id="register-form">
+      <input type="text" id="username" placeholder="Логін" class="auth-input" required>
+      <input type="email" id="email" placeholder="Email"class="auth-input">
+      <input type="password" id="password" placeholder="Пароль" class="auth-input" required>
+      <!-- Згода на обробку даних -->
+    <label class="consent">
+      <input type="checkbox" id="consent">
+      Надаю згоду на обробку та зберігання персональних даних
+    </label>
+      <button type="submit" class="auth-button">Зареєструватися</button>
+    </form>
+    <p>Вже є акаунт? <a href="login.html">Увійти</a></p>
+  </div>
+
+  <script>
+  const consentCheckbox = document.getElementById("consent");
+  const registerBtn = document.getElementById("register-btn");
+
+  // Активуємо кнопку тільки після згоди
+  consentCheckbox.addEventListener("change", () => {
+    registerBtn.disabled = !consentCheckbox.checked;
+  });
+    document.getElementById("register-form").onsubmit = async e => {
+      e.preventDefault();
+       if (!consentCheckbox.checked) {
+      alert("Для реєстрації необхідно надати згоду на обробку персональних даних");
+      return;
+      }
+      const body = {
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+      };
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      if (res.ok) {
+        alert("Реєстрація успішна!");
+        window.location.href = "login.html";
+      } else {
+        alert("Помилка реєстрації");
+      }
+    };
+  </script>
+</body>
+</html>

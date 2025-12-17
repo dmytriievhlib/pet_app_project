@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Адмін-панель</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="admin-container">
+  <h1>Адміністративна панель</h1>
+
+  <div class="stats-grid">
+    <div class="card">
+      <h3>Користувачі</h3>
+      <span id="users">0</span>
+    </div>
+
+    <div class="card">
+      <h3>Ветеринарні клініки</h3>
+      <span id="clinics">0</span>
+    </div>
+
+    <div class="card">
+      <h3>Кінологічні центри</h3>
+      <span id="centers">0</span>
+    </div>
+
+    <div class="card">
+      <h3>Тренери</h3>
+      <span id="trainers">0</span>
+    </div>
+
+    <div class="card">
+      <h3>Заводчики</h3>
+      <span id="breeders">0</span>
+    </div>
+
+    <div class="card">
+      <h3>Організації допомоги</h3>
+      <span id="organizations">0</span>
+    </div>
+  </div>
+
+  <h2>Тварини за типом</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Тип</th>
+        <th>Кількість</th>
+      </tr>
+    </thead>
+    <tbody id="pets-table"></tbody>
+  </table>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

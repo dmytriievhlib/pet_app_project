@@ -1,0 +1,21 @@
+/* style.css */
+body { font-family: Arial, sans-serif; background:#f6f8fb; color:#333; margin:20px; }
+.container { max-width:1100px; margin:0 auto; }
+.card { background:#fff; padding:16px; margin-bottom:18px; border-radius:8px; box-shadow:0 2px 8px rgba(20,20,20,0.05); }
+h1 { color:#214a77; }
+h2 { color:#2c3e50; margin-top:0; }
+
+/* forms */
+form input, form select, form button { padding:8px; margin-right:8px; margin-top:6px; border-radius:6px; border:1px solid #d1dbe8; }
+form button { background:#2d9cdb; color:#fff; border:none; cursor:pointer; }
+form button:hover { background:#1d84c6; }
+
+/* tables */
+table { width:100%; border-collapse:collapse; margin-top:8px; }
+th, td { padding:10px 12px; border-bottom:1px solid #eef3f8; text-align:left; }
+th { background:#2d9cdb; color:#fff; font-weight:600; }
+tr:hover { background:#fafcff; }
+
+button.delete { background:#e74c3c; color:#fff; padding:6px 10px; border-radius:6px; border:none; cursor:pointer; }
+button.show-events { background:#2ecc71; color:#fff; padding:6px 10px; border-radius:6px; border:none; cursor:pointer; }
+button.edit { background:#ccc92e; color:#fff; padding:6px 10px; border-radius:6px; border:none; cursor:pointer; }
